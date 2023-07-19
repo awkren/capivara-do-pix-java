@@ -2,6 +2,7 @@ package pix.capivara.capivaradopix;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class UserController {
   }
 
   @PostMapping("/users/withdraw/{id}")
-  public ResponseEntity<User> withdrawProfits(@PathVariable Long id) {
+  public ResponseEntity<?> withdrawProfits(@PathVariable Long id) {
     Optional<User> optionalUser = userService.getUserById(id);
 
     if (!optionalUser.isPresent()) {
@@ -41,10 +42,19 @@ public class UserController {
     }
 
     User user = optionalUser.get();
+
+    Long totalUsers = userService.countUsers();
+
+    double randomChance = totalUsers > 5 ? (totalUsers - 5) * 0.05 : 0;
+
+    if (totalUsers > 5 && new Random().nextInt(101) / 100.0 < randomChance) {
+      return new ResponseEntity<>("Withdraw not allowed", HttpStatus.FORBIDDEN);
+    }
+
     user.setProfit(0.0);
     userService.add(user);
 
-    return new ResponseEntity<User>(user, HttpStatus.OK);
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
   @DeleteMapping("/users/{id}")
