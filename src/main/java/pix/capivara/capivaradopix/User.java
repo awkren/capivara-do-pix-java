@@ -12,7 +12,7 @@ public class User {
   private long id;
   private String name;
   private Double investment;
-  private Double profit;
+  private Double profit = 0.0;
 
   public long getId() {
     return id;
@@ -36,7 +36,6 @@ public class User {
 
   public void setInvestment(Double investment) {
     this.investment = investment;
-    this.profit = investment * 0.33;
   }
 
   public Double getProfit() {
