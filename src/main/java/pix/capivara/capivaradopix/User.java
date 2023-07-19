@@ -36,13 +36,19 @@ public class User {
 
   public void setInvestment(Double investment) {
     this.investment = investment;
+    this.profit = investment * 0.33;
   }
 
   public Double getProfit() {
     return profit;
   }
 
-  public void setProfit(Double profit) {
+  private void setProfit(Double profit) {
     this.profit = profit;
   }
+
+  void addProfit(Double additionalProfit) {
+    this.setProfit(this.getProfit() + additionalProfit);
+  }
+
 }
