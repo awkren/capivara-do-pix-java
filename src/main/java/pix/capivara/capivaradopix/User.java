@@ -42,7 +42,7 @@ public class User {
     return profit;
   }
 
-  private void setProfit(Double profit) {
+  public void setProfit(Double profit) {
     this.profit = profit;
   }
 
